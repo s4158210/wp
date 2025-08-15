@@ -1,0 +1,37 @@
+body {
+    font-family: 'Ysabeau SC', sans-serif;
+    background-color: #fff5f8;
+    color: #333333;
+}
+
+.navbar {
+    background-color:  #cd4f07;
+    margin: auto;
+}
+
+.navbar a,
+.navbar-brand {
+    color: white !important;
+    font-weight: 500;
+}
+
+.nav-item {
+    padding-left: 10px;
+}
+
+.btn-custom {
+    background-color: #cc4b0c;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 15px;
+}
+
+footer {
+    background: linear-gradient(to right, #cc4b0c, #c96d4a);
+    color: white;
+    padding: 20px 0;
+    
+    text-align: end;
+    font-size: 14px;
+   
+}
