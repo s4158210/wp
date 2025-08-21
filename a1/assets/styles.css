@@ -13,29 +13,63 @@ body {
 .navbar-brand {
     color: white !important;
     font-weight: 500;
+    text-decoration: none;
 }
 
 .nav-item {
-    padding-left: 10px;
+    padding-left: 20px;
 }
 
 h1 {
     color: #cd4f07;
+    font-family: 'Libre Baskerville';
 }
+
+.carousel-item {
+    height:500px;
+    object-fit: cover;
+}
+
+.card-title {
+    color: #cd4f07;
+}
+
+.card-text {
+    color: #333333;
+}
+
+.skill-img {
+    height: 290px;
+    width: 500px;
+}
+
+.table a {
+    text-decoration: none;
+}
+
 
 .btn-custom {
     background-color: #cc4b0c;
     color: white;
     border-radius: 20px;
-    padding: 5px 15px;
+    padding: 5px 10px;
 }
+
+.btn-primary {
+    background-color: #cc4b0c;
+}
+
+
 
 footer {
     background: linear-gradient(to right, #cc4b0c, #c96d4a);
     color: white;
-    padding: 20px 0;
-    
+    margin-top: 160px;
+    width: 100%;
+    height: 100px;
+    padding: 15px 0;
     text-align: end;
-    font-size: 14px;
+    font-size: 20px;
    
+    
 }
