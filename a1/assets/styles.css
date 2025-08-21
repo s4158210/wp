@@ -4,6 +4,7 @@ body {
     color: #333333;
 }
 
+/* Navigation bar custom */
 .navbar {
     background-color:  #cd4f07;
     margin: auto;
@@ -20,16 +21,19 @@ body {
     padding-left: 20px;
 }
 
+/* Custom font and color specific to h1 element only */
 h1 {
     color: #cd4f07;
     font-family: 'Libre Baskerville';
 }
 
+/* Image customization for image in carousel page */
 .carousel-item {
     height:500px;
     object-fit: cover;
 }
 
+/* Detail section for carousel page */
 .card-title {
     color: #cd4f07;
 }
@@ -38,6 +42,7 @@ h1 {
     color: #333333;
 }
 
+/* Image customization for image in skills page*/
 .skill-img {
     height: 290px;
     width: 500px;
@@ -61,6 +66,7 @@ h1 {
 
 
 
+/*  Footer content*/
 footer {
     background: linear-gradient(to right, #cc4b0c, #c96d4a);
     color: white;
