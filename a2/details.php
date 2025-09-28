@@ -44,8 +44,12 @@ $imgUrl = $IMG_DIR . ltrim($skill['image_path'], '/');
             <div class="col-md-4 text-start">
                 <img src="<?= htmlspecialchars($imgUrl) ?>"
                     alt="<?= htmlspecialchars($skill['title']) ?>"
-                    class="img-fluid rounded mb-4"
-                    style="max-width: 250px;">
+                    class="img-fluid rounded mb-4 gallery"
+                    style="max-width: 300px; cursor:pointer;"
+                    data-bs-toggle="modal"
+                    data-bs-target="#imageModal"
+                    data-bs-image="<?= htmlspecialchars($imgUrl) ?>">
+
             </div>
 
             <!-- Details -->
@@ -61,7 +65,20 @@ $imgUrl = $IMG_DIR . ltrim($skill['image_path'], '/');
         </div>
     </div>
 
+    <!-- Modal for image pop-up -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <img src="" id="modalImage" class="img-fluid rounded-top" alt="popup img">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php include 'includes/footer.inc'; ?>
+    <script src="/wp/a2/assets/scripts.js"></script>
 </body>
 
 </html>

@@ -30,7 +30,10 @@
                     <?php $row = $result->fetch_assoc(); ?>
                     <img src="<?= $IMG_DIR . $row['image_path'] ?>"
                         alt="<?= htmlspecialchars($row['title']) ?>"
-                        class="img-fluid rounded skill-img">
+                        class="img-fluid rounded skill-img"
+                        data-bs-toggle="modal"
+                        data-bs-target="#imageModal"
+                        data-bs-image="<?= htmlspecialchars($imgUrl) ?>"
                 <?php endif; ?>
             </div>
             <div class="col-md-8">
@@ -72,8 +75,22 @@
         </div>
     </div>
 
+    <!-- Modal for image pop-up -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <img src="" id="modalImage" class="img-fluid rounded-top" alt="popup img">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <?php include 'includes/footer.inc'; ?>
+    <script src="/wp/a2/assets/scripts.js"></script>
+
 </body>
 
 </html>
