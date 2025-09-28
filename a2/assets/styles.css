@@ -1,0 +1,102 @@
+body {
+    font-family: 'Ysabeau SC', sans-serif;
+    background-color: #fff5f8;
+    color: #333333;
+}
+
+/* Navigation bar custom */
+.navbar {
+    background-color:  #cd4f07;
+    margin: auto;
+}
+
+.navbar a,
+.navbar-brand {
+    color: white !important;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.nav-item {
+    padding-left: 20px;
+}
+
+/* Custom font and color specific to h1 element only */
+h1 {
+    color: #cd4f07;
+    font-family: 'Libre Baskerville';
+}
+
+/* Image customization for image in carousel page */
+.carousel-item {
+    height:500px;
+    object-fit: cover;
+}
+
+.carousel-title {
+    background-color: #333333;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Detail section for carousel page */
+.card-title {
+    color: #cd4f07;
+}
+
+.card-text {
+    color: #333333;
+}
+
+/* Image customization for image in skills page*/
+.skill-img {
+    height: 290px;
+    width: 500px;
+}
+
+.table a {
+    text-decoration: none;
+}
+
+.container-details {
+    padding-top: 50px;
+}
+
+.btn-custom {
+    background-color: #cc4b0c;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.btn-primary {
+    background-color: #cc4b0c;
+    border-radius: 25px;
+    margin-top: 50px;
+    height: 50px;
+    width: auto;
+    text-align: center;
+}
+
+.file-warning {
+    background-color: #f8d7da;
+    color: #842029;
+    padding: 10px;
+    border: 1px solid #f5c2c7;
+    border-radius: 0.375rem;
+    font-size: 0.9rem;
+}
+
+
+/*  Footer content*/
+footer {
+    background: linear-gradient(to right, #cc4b0c, #c96d4a);
+    color: white;
+    margin-top: 160px;
+    width: 100%;
+    height: 100px;
+    padding: 15px 0;
+    text-align: end;
+    font-size: 20px;
+   
+    
+}
