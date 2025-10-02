@@ -11,7 +11,7 @@ if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
     // ✅ Titan server settings
     $host   = "talsprddb02.int.its.rmit.edu.au";  // Titan MySQL host
     $user   = "s4158210";                // your student username
-    $pass   = "p20050121!";  // replace with your Titan MySQL password
+    $pass   = "iountanath";  // replace with your Titan MySQL password
     $dbname = "s4158210";                // Titan DB name (usually same as username)
 }
 
