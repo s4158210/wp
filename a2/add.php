@@ -9,6 +9,18 @@
     include 'includes/nav.inc';
     include __DIR__ . '/includes/db_connect.inc';
 
+    // ✅ Save uploads to the right folder
+    $targetDir = __DIR__ . "/assets/images/skills/";  // physical folder path
+    $targetFile = $targetDir . basename($_FILES["image"]["name"]);
+    $imagePath = ""; // default empty
+
+    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+        // Save just the filename in DB
+        $imagePath = basename($_FILES["image"]["name"]);
+    } else {
+        die("❌ Image upload failed.");
+    }
+
     // 🔎 Debugging enabled (remove on production)
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
