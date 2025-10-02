@@ -27,22 +27,19 @@
     <!-- Table content for the list of skills -->
     <div class="container mt-5 mb-5">
         <h1 class="mb-4">All Skills</h1>
-        <div class="row mt-4">
-            <div class="col-md-4">
-                <!-- Example image: first skill -->
-                <?php if ($result && $result->num_rows > 0): ?>
-                    <?php $row = $result->fetch_assoc(); ?>
-                    <img src="<?= $IMG_DIR . $row['image_path'] ?>"
-                        alt="<?= htmlspecialchars($row['title']) ?>"
-                        class="img-fluid rounded skill-img"
-                        data-bs-toggle="modal"
-                        data-bs-target="#imageModal"
-                        data-bs-image="<?= htmlspecialchars($imgUrl) ?>">
-                <?php endif; ?>
+        <div class="row mt-4 align-items-start">
+
+            <!-- Left column: static skill image -->
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                <img src="<?= $IMG_DIR ?>1.png"
+                    alt="Skills"
+                    class="img-fluid rounded shadow-sm">
             </div>
+
+            <!-- Right column: table -->
             <div class="col-md-8">
-                <table class="table table-striped text-center">
-                    <thead>
+                <table class="table table-striped text-center align-middle shadow-sm">
+                    <thead class="table-light">
                         <tr>
                             <th>Title</th>
                             <th>Category</th>
@@ -53,7 +50,6 @@
                     <tbody>
                         <?php if ($result && $result->num_rows > 0): ?>
                             <?php
-                            // Reset result pointer to beginning
                             $result->data_seek(0);
                             while ($row = $result->fetch_assoc()):
                                 $title = htmlspecialchars($row['title']);
