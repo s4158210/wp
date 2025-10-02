@@ -9,10 +9,6 @@
     include 'includes/nav.inc';
     include __DIR__ . '/includes/db_connect.inc';
 
-    // ✅ Save uploads to the right folder
-    $targetDir = __DIR__ . "/assets/images/skills/";  // physical folder path
-    $targetFile = $targetDir . basename($_FILES["image"]["name"]);
-    $imagePath = ""; // default empty
 
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
         // Save just the filename in DB
@@ -38,33 +34,26 @@
         $rate = (float)$_POST['rate'];
         $level = trim($_POST['level']);
 
-        // validate fields
         if ($title && $description && $category && $rate > 0 && $level) {
-            // handle image
+            // ✅ Handle image upload
             if (isset($_FILES['skillImage']) && $_FILES['skillImage']['error'] === UPLOAD_ERR_OK) {
                 $ext = strtolower(pathinfo($_FILES['skillImage']['name'], PATHINFO_EXTENSION));
                 $newFile = uniqid("skill_", true) . "." . $ext;
                 $uploadPath = $IMG_DIR . $newFile;
 
                 if (move_uploaded_file($_FILES['skillImage']['tmp_name'], $uploadPath)) {
-                    // save to DB
-                    $sql = "INSERT INTO skills (title, description, category, rate_per_hr, level, image_path) 
-                        VALUES (?, ?, ?, ?, ?, ?)";
+                    // Save filename to DB
+                    $sql = "INSERT INTO skills (title, description, category, rate_per_hr, level, image_path, created_at) 
+                            VALUES (?, ?, ?, ?, ?, ?, NOW())";
                     $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("sssdss", $title, $description, $category, $rate, $level, $newFile);
 
-                    if ($stmt) {
-                        // ✅ Correct binding: 3 strings, 1 double, 2 strings
-                        $stmt->bind_param("sssdss", $title, $description, $category, $rate, $level, $newFile);
-
-                        if ($stmt->execute()) {
-                            $message = "<div class='alert alert-success mt-3'>✅ Skill added successfully!</div>";
-                        } else {
-                            $message = "<div class='alert alert-danger mt-3'>❌ Database error: " . $stmt->error . "</div>";
-                        }
-                        $stmt->close();
+                    if ($stmt->execute()) {
+                        $message = "<div class='alert alert-success mt-3'>✅ Skill added successfully!</div>";
                     } else {
-                        $message = "<div class='alert alert-danger mt-3'>❌ Failed to prepare SQL statement.</div>";
+                        $message = "<div class='alert alert-danger mt-3'>❌ Database error: " . $stmt->error . "</div>";
                     }
+                    $stmt->close();
                 } else {
                     $message = "<div class='alert alert-danger mt-3'>❌ Failed to upload image.</div>";
                 }
