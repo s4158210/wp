@@ -12,7 +12,7 @@ if ($serverName === "localhost") {
     // Titan server connection
     $host = "titan.csit.rmit.edu.au";
     $user = "s4158210";          // your student username
-    $pass = "YOUR_DB_PASSWORD";  // replace with your Titan DB password (not RMIT login password!)
+    $pass = "p20050121!";  // replace with your Titan DB password (not RMIT login password!)
     $dbname = "s4158210";        // usually same as your username
 } elseif ($serverName === "jacob5.myuni.edu") {
     // Jacob5 connection
