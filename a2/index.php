@@ -27,25 +27,25 @@
 
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="<?= $IMG_DIR ?>1.png" class="d-block w-100" alt="Beginner Guitar Lessons">
+                    <img src="" <?= $IMG_DIR . htmlspecialchars($row['image_path']) ?>" alt="<?= htmlspecialchars($row['title']) ?>" 1.png" class="d-block w-100" alt="Beginner Guitar Lessons">
                     <div class="carousel-caption d-none d-md-block carousel-title">
                         <h5>French Pastry Making</h5>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="<?= $IMG_DIR ?>3.png" class="d-block w-100" alt="Artisan Bread Baking">
+                    <img src="" <?= $IMG_DIR . htmlspecialchars($row['image_path']) ?>" alt="<?= htmlspecialchars($row['title']) ?>" 3.png" class="d-block w-100" alt="Artisan Bread Baking">
                     <div class="carousel-caption d-none d-md-block carousel-title">
                         <h5>Artisan Bread Baking</h5>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="<?= $IMG_DIR ?>8.png" class="d-block w-100" alt="Intro to PHP & MySQL">
+                    <img src="" <?= $IMG_DIR . htmlspecialchars($row['image_path']) ?>" alt="<?= htmlspecialchars($row['title']) ?>" 8.png" class="d-block w-100" alt="Intro to PHP & MySQL">
                     <div class="carousel-caption d-none d-md-block carousel-title">
                         <h5>Intro to PHP & MySQL</h5>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="<?= $IMG_DIR ?>2.png" class="d-block w-100" alt="Intermediate Fingerstyle">
+                    <img src="" <?= $IMG_DIR . htmlspecialchars($row['image_path']) ?>" alt="<?= htmlspecialchars($row['title']) ?>" 2.png" class="d-block w-100" alt="Intermediate Fingerstyle">
                     <div class="carousel-caption d-none d-md-block carousel-title">
                         <h5>Intermediate Fingerstyle</h5>
                     </div>
@@ -102,6 +102,7 @@
     </div><!-- /.container -->
 
     <?php include 'includes/footer.inc'; ?>
+    <script src="<?= $JS_DIR ?>scripts.js"></script>
 </body>
 
 </html>
