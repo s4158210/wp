@@ -12,6 +12,12 @@ if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
     http_response_code(400);
     exit('Invalid request.');
 }
+
+$BASE_URL = '/wp/a2/';
+if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+        $BASE_URL = '/~s4158210/wp/a2/';
+}
+
 $skill_id = (int)$_GET['id'];
 
 $stmt = $conn->prepare('SELECT title, description, category, image_path, rate_per_hr, level
@@ -64,7 +70,7 @@ $imgUrl = $IMG_DIR . ltrim($skill['image_path'], '/');
                 <p><span style="font-weight:bold; color:#b23c17;">Rate:</span> $<?= htmlspecialchars($skill['rate_per_hr']) ?>/hr</p>
 
                 <!-- Back button -->
-                <a href="/wp/a2/index.php" class="btn btn-secondary mt-3">← Back to Home</a>
+                <a href="<?= $BASE_URL?>index.php" class="btn btn-secondary mt-3">← Back to Home</a>
             </div>
         </div>
     </div>
