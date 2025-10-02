@@ -7,7 +7,7 @@ $dbname = "skillswap"; // your local DB
 
 
 // detect if running on Titan server or locally
-if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') != false) {
     // ✅ Titan server settings
     $host   = "talsprddb02.int.its.rmit.edu.au";  // Titan MySQL host
     $user   = "s4158210";                // your student username
