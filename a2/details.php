@@ -4,6 +4,10 @@ include __DIR__ . '/includes/db_connect.inc';
 
 $IMG_DIR  = '/wp/a2/assets/images/skills/';
 
+if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+    $IMG_DIR = '/~s4158210/wp/a2/assets/images/skills/';
+}
+
 if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
     http_response_code(400);
     exit('Invalid request.');
