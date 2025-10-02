@@ -18,9 +18,9 @@
 
     if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
         $IMG_DIR = '/~s4158210/wp/a2/assets/images/skills/'; // Titan server
-    }   
+    }
 
-     $sql = "SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
+    $sql = "SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
             FROM skills ORDER BY created_at DESC";
     $result = $conn->query($sql);
 
@@ -95,7 +95,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $title ?></h5>
                                     <p class="card-text">Rate: $<?= $rate ?>/hr</p>
-                                    <a href="/wp/a2/details.php?id=<?= $id ?>" class="btn btn-primary">View Details</a>
+                                    <a href="details.php?id=<?= $row['skill_id'] ?></a> class="btn btn-primary">View Details</a>
                                 </div>
                             </div>
                         </div>
