@@ -7,7 +7,7 @@
            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                <ul class="navbar-nav align-items-start">
                    <a class="navbar-brand fw-bold"><a href="index.php">
-                           <img src="images/favicon.ico" alts="Logo">
+                           <img src="assets/images/favicon.ico" alts="Logo">
                        </a>
                        <li class="nav-item"><a class="nav-link"><a href="index.php">Home</a></li>
                        <li class="nav-item"><a class="nav-link"><a href="skills.php">All Skills</a></li>
