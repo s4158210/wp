@@ -33,7 +33,7 @@
                         class="img-fluid rounded skill-img"
                         data-bs-toggle="modal"
                         data-bs-target="#imageModal"
-                        data-bs-image="<?= htmlspecialchars($imgUrl) ?>"
+                        data-bs-image="<?= htmlspecialchars($imgUrl) ?>">
                 <?php endif; ?>
             </div>
             <div class="col-md-8">
