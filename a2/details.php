@@ -1,4 +1,3 @@
-<?php /* /wp/a2/details.php */ ?>
 <?php
 include __DIR__ . '/includes/db_connect.inc';
 
@@ -15,8 +14,14 @@ if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
 
 $BASE_URL = '/wp/a2/';
 if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-        $BASE_URL = '/~s4158210/wp/a2/';
+    $BASE_URL = '/~s4158210/wp/a2/';
 }
+
+$JS_DIR = "/wp/a2/assets/";
+if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+    $JS_DIR = "/~s4158210/wp/a2/assets/";
+}
+
 
 $skill_id = (int)$_GET['id'];
 
@@ -70,7 +75,7 @@ $imgUrl = $IMG_DIR . basename($skill['image_path']);
                 <p><span style="font-weight:bold; color:#b23c17;">Rate:</span> $<?= htmlspecialchars($skill['rate_per_hr']) ?>/hr</p>
 
                 <!-- Back button -->
-                <a href="<?= $BASE_URL?>index.php" class="btn btn-secondary mt-3">← Back to Home</a>
+                <a href="<?= $BASE_URL ?>index.php" class="btn btn-secondary mt-3">← Back to Home</a>
             </div>
         </div>
     </div>
@@ -88,7 +93,7 @@ $imgUrl = $IMG_DIR . basename($skill['image_path']);
     </div>
 
     <?php include 'includes/footer.inc'; ?>
-    <script src="/wp/a2/assets/scripts.js"></script>
+    <script src="<?= $JS_DIR ?>scripts.js"></script>
 </body>
 
 </html>

@@ -18,6 +18,11 @@
     $sql = "SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
             FROM skills ORDER BY created_at DESC";
     $result = $conn->query($sql);
+
+    $JS_DIR = "/wp/a2/assets/";
+    if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+        $JS_DIR = "/~s4158210/wp/a2/assets/";
+    }
     ?>
 
     <!-- Gallery content -->
@@ -37,17 +42,17 @@
                     }
                 ?>
                     <div class="col-6 col-md-3">
-                            <img src="<?= htmlspecialchars($img) ?>"
-                                class="img-fluid rounded gallery"
-                                data-bs-toggle="modal"
-                                data-bs-target="#imageModal"
-                                data-bs-image="<?= htmlspecialchars($img) ?>"
-                                alt="<?= $title ?>">
-                            <p class="text-center mt-2">
-                                <a href="<?= $BASE_URL ?>details.php?id=<?= $id ?>" class="text-decoration-none">
-                                    <?= $title ?>
-                                </a>
-                            </p>
+                        <img src="<?= htmlspecialchars($img) ?>"
+                            class="img-fluid rounded gallery"
+                            data-bs-toggle="modal"
+                            data-bs-target="#imageModal"
+                            data-bs-image="<?= htmlspecialchars($img) ?>"
+                            alt="<?= $title ?>">
+                        <p class="text-center mt-2">
+                            <a href="<?= $BASE_URL ?>details.php?id=<?= $id ?>" class="text-decoration-none">
+                                <?= $title ?>
+                            </a>
+                        </p>
                         </a>
                     </div>
                 <?php endwhile; ?>
@@ -74,7 +79,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/wp/a2/assets/scripts.js"></script>
+    <script src="<?= $JS_DIR ?>scripts.js"></script>
 </body>
 
 </html>
