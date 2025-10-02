@@ -9,11 +9,14 @@
     include 'includes/nav.inc';
     include __DIR__ . '/includes/db_connect.inc';
 
-    // Correct base path for images
-    $IMG_DIR = '/wp/a2/assets/images/skills/';
+    $IMG_DIR = '/wp/a2/assets/images/skills/'; // Local XAMPP
 
-    // Fetch skills
-    $sql = "SELECT skill_id, title, image_path FROM skills ORDER BY skill_id ASC";
+    if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+        $IMG_DIR = '/~s4158210/wp/a2/assets/images/skills/'; // Titan server
+    }
+
+    $sql = "SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
+            FROM skills ORDER BY created_at DESC";
     $result = $conn->query($sql);
     ?>
 

@@ -14,6 +14,10 @@
     // Base path for images
     $IMG_DIR = '/wp/a2/assets/images/skills/';
 
+    if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+        $IMG_DIR = '/~s4158210/wp/a2/assets/images/skills/'; // Titan server
+    }
+
     // Fetch skills from DB
     $sql = "SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
                 FROM skills ORDER BY created_at DESC";
