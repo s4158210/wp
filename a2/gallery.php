@@ -37,7 +37,6 @@
                     }
                 ?>
                     <div class="col-6 col-md-3">
-                        <a href="<?= $BASE_URL ?>details.php?id=<?= $id ?>">
                             <img src="<?= htmlspecialchars($img) ?>"
                                 class="img-fluid rounded gallery"
                                 data-bs-toggle="modal"

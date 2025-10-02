@@ -33,7 +33,7 @@ $skill = $res->fetch_assoc();
 $stmt->close();
 $conn->close();
 
-$imgUrl = $IMG_DIR . ltrim($skill['image_path'], '/');
+$imgUrl = $IMG_DIR . basename($skill['image_path']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
