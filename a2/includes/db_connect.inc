@@ -25,9 +25,8 @@ if (!$conn) {
 
 $IMG_DIR = "/wp/a2/assets/images/skills/";
 
-
 if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-    $basePath = "/~s4158210/public_html/wp/a2/assets/images/skills/";
+    $IMG_DIR = "/~s4158210/wp/a2/assets/images/skills/";
 }
 
 $img = $basePath . htmlspecialchars($row['image_path']);
