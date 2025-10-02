@@ -80,7 +80,7 @@
                     ?>
                         <div class="col-md-3 col-sm-6 mb-4 container-details">
                             <a href="/wp/a2/details.php?id=<?= $id ?>" class="text-decoration-none">
-                                <img src="<?= htmlspecialchars($img) ?>" alt="<?= $title ?>" class="img-fluid mb-2">
+                                
                                 <h5 class="card-title"><?= $title ?></h5>
                             </a>
                             <p class="card-text">Rate: $<?= $rate ?>/hr</p>
