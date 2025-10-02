@@ -10,13 +10,6 @@
     include __DIR__ . '/includes/db_connect.inc';
 
 
-    if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
-        // Save just the filename in DB
-        $imagePath = basename($_FILES["image"]["name"]);
-    } else {
-        die("❌ Image upload failed.");
-    }
-
     // 🔎 Debugging enabled (remove on production)
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
