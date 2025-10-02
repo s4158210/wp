@@ -1,10 +1,10 @@
 <?php
-
 // ✅ Local XAMPP settings
 $host   = "localhost";
 $user   = "root";
 $pass   = "";
-$dbname = "skillswap";               // your local DB
+$dbname = "skillswap"; // your local DB
+
 
 // detect if running on Titan server or locally
 if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
@@ -15,11 +15,19 @@ if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
     $dbname = "s4158210";                // Titan DB name (usually same as username)
 }
 
-
 // connect
 $conn = mysqli_connect($host, $user, $pass, $dbname);
 
 // check connection
-if ($conn->connect_error) {
-    die("❌ Connection failed: " . $conn->connect_error);
+if (!$conn) {
+    die("❌ Connection failed: " . mysqli_connect_error());
 }
+
+$basePath = "/wp/a2/assets/images/skills/"; // default for local
+
+if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+    $basePath = "/~s4158210/wp/a2/assets/images/skills/";
+}
+
+$img = $basePath . htmlspecialchars($row['image_path']);
+?>
