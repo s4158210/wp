@@ -66,7 +66,7 @@
     <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <img src="" id="modalImage" class="img-fluid rounded-top" alt="popup img">
+                <img src="" id="modalImage" class="img-fluid rounded-top border border-5 border-white shadow custom-border" alt=" popup img">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
