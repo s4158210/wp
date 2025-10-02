@@ -32,17 +32,6 @@ if (!$conn) {
 // Set charset to UTF-8 for proper character handling
 mysqli_set_charset($conn, "utf8");
 
-
 // check connection
-if (!$conn) {
-    die("❌ Connection failed: " . mysqli_connect_error());
-}
 
-$IMG_DIR = "/wp/a2/assets/images/skills/";
-
-if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-    $IMG_DIR = "/~s4158210/wp/a2/assets/images/skills/";
-}
-
-$img = $basePath . htmlspecialchars($row['image_path']);
 ?>
