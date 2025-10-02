@@ -1,33 +1,25 @@
 <?php
-// Detect environment by server name
-$serverName = $_SERVER['SERVER_NAME'];
 
-if ($serverName === "localhost") {
-    // XAMPP local connection
-    $host = "localhost";
-    $user = "root";
-    $pass = "";
-    $dbname = "skillswap";
-} elseif (strpos($serverName, "titan.csit.rmit.edu.au") !== false) {
-    // Titan server connection
-    $host = "titan.csit.rmit.edu.au";
-    $user = "s4158210";          // your student username
-    $pass = "p20050121!";  // replace with your Titan DB password (not RMIT login password!)
-    $dbname = "s4158210";        // usually same as your username
-} elseif ($serverName === "jacob5.myuni.edu") {
-    // Jacob5 connection
-    $host = "jacob5.myuni.edu";
-    $user = "your_jacob_user";
-    $pass = "your_jacob_password";
-    $dbname = "skillswap";
-} else {
-    die("❌ Unknown server environment: " . $serverName);
+// ✅ Local XAMPP settings
+$host   = "localhost";
+$user   = "root";
+$pass   = "";
+$dbname = "skillswap";               // your local DB
+
+// detect if running on Titan server or locally
+if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+    // ✅ Titan server settings
+    $host   = "talsprddb02.int.its.rmit.edu.au";  // Titan MySQL host
+    $user   = "s4158210";                // your student username
+    $pass   = "p20050121!";  // replace with your Titan MySQL password
+    $dbname = "s4158210";                // Titan DB name (usually same as username)
 }
 
-// Create connection
-$conn = new mysqli($host, $user, $pass, $dbname);
 
-// Check connection
+// connect
+$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+// check connection
 if ($conn->connect_error) {
-    die("❌ Database connection failed: " . $conn->connect_error);
+    die("❌ Connection failed: " . $conn->connect_error);
 }
