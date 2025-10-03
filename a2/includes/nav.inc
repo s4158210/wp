@@ -6,13 +6,13 @@
            </button>
            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                <ul class="navbar-nav align-items-start">
-                   <a class="navbar-brand fw-bold"><a href="index.php">
+                   <a class="navbar-brand fw-bold" href="index.php">
                            <img src="assets/images/favicon.ico" alts="Logo">
                        </a>
-                       <li class="nav-item mx-2"><a class="nav-link"><a href="index.php">Home</a></li>
-                       <li class="nav-item mx-2"><a class="nav-link"><a href="skills.php">All Skills</a></li>
-                       <li class="nav-item mx-2"><a class="nav-link"><a href="gallery.php">Gallery</a></li>
-                       <li class="nav-item mx-2"><a class="nav-link"><a href="add.php">Add Skill</a></li>
+                       <li class="nav-item mx-2"><a class="nav-link" href="index.php">Home</a></li>
+                       <li class="nav-item mx-2"><a class="nav-link" href="skills.php">All Skills</a></li>
+                       <li class="nav-item mx-2"><a class="nav-link" href="gallery.php">Gallery</a></li>
+                       <li class="nav-item mx-2"><a class="nav-link" href="add.php">Add Skill</a></li>
                </ul>
                <form class="d-flex" role="search">
                    <div class="input-group input-group-sm">

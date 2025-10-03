@@ -96,7 +96,6 @@
                             <div class="text-center">
                                 <!-- Skill Image -->
                                 <a href="<?= $BASE_URL ?>details.php?id=<?= $id ?>">
-                                </a>
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $title ?></h5>
                                     <p class="card-text">Rate: $<?= $rate ?>/hr</p>
@@ -115,7 +114,7 @@
     </div><!-- /.container -->
 
     <?php include 'includes/footer.inc'; ?>
-    <script src="<?= $JS_DIR ?>scripts.js"></script>
+    <script src="<?= $JS_DIR ?>assests/scripts.js"></script>
 </body>
 
 </html>
