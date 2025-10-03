@@ -15,9 +15,10 @@
         $IMG_DIR = '/~s4158210/wp/a2/assets/images/skills/'; // Titan server
     }
 
-    $sql = "SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
-            FROM skills ORDER BY created_at DESC";
-    $result = $conn->query($sql);
+    $stmt = $conn->prepare("SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
+             FROM skills ORDER BY created_at DESC");
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     $JS_DIR = "/wp/a2/assets/";
     if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
