@@ -39,7 +39,7 @@
                     $BASE_URL = '/wp/a2/';
                     if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
                         $BASE_URL = '/~s4158210/wp/a2/';
-                    }
+                    } 
                 ?>
                     <div class="col-6 col-md-3">
                         <img src="<?= htmlspecialchars($img) ?>"
@@ -53,7 +53,7 @@
                                 <?= $title ?>
                             </a>
                         </p>
-                        </a>
+                        
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>

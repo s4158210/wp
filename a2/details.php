@@ -54,7 +54,7 @@ $imgUrl = $IMG_DIR . basename($skill['image_path']);
             <?= htmlspecialchars($skill['title']) ?>
         </h1>
 
-        <div class=>
+        <div>
             <!-- Image -->
             <div class="col-md-4 text-start">
                 <img src="<?= htmlspecialchars($imgUrl) ?>"
@@ -81,10 +81,10 @@ $imgUrl = $IMG_DIR . basename($skill['image_path']);
     </div>
 
     <!-- Modal for image pop-up -->
-    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <img src="" id="modalImage" class="img-fluid rounded-top border border-5 border-white shadow custom-border" alt="popup img">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" id="modalImage" class="img-fluid rounded-top border border-5 border-white shadow custom-border" alt="popup img">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>

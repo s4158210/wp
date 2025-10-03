@@ -79,7 +79,7 @@
     <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <img src= id="modalImage" class="img-fluid rounded-top" alt="popup img">
+                <img src="/wp/a2/assets/images/skills/default.png" id="modalImage" class="img-fluid rounded-top" alt="popup img">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
