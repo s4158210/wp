@@ -51,7 +51,9 @@
                         <p class="text-center mt-2">
                             <a href="<?= $BASE_URL ?>details.php?id=<?= $id ?>" class="text-decoration-none">
                                 <?= $title ?>
+                            </a>
                         </p>
+                        </a>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
