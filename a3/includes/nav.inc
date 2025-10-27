@@ -29,16 +29,31 @@
                 </li>
             </ul>
 
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <span class="navbar-text me-2">
+                    Hello, <?= htmlspecialchars($_SESSION['username']) ?>
+                </span>
+                <a href="logout.php" class="btn btn-outline-light btn-sm">Logout</a>
+            <?php else: ?>
+                <a href="login.php" class="btn btn-outline-light btn-sm me-2">Login</a>
+                <a href="register.php" class="btn btn-light btn-sm">Register</a>
+            <?php endif; ?>
+
             <!-- Search -->
             <form class="d-flex" role="search">
                 <div class="input-group input-group-sm">
                     <span class="input-group-text bg-white border-end-0">
                         <i class="fas fa-search"></i>
                     </span>
-                    <input class="form-control border-start-0" type="search" placeholder="Search skills..."
-                        aria-label="Search">
+                    <input class="form-control border-start-0" type="search" placeholder="Search skills..." aria-label="Search">
                 </div>
             </form>
+
+            <!-- Login/Register -->
+
+
+            <!-- Auth buttons -->
+
         </div>
     </div>
 </nav>

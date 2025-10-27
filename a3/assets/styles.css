@@ -101,6 +101,73 @@ footer {
     
 }
 
+body.login-page {
+    background: #faf5f3;
+    /* very light warm tint to echo your theme */
+}
 
 
+.auth-section {
+    padding-top: 3rem;
+    padding-bottom: 4rem;
+}
 
+/* The big centered panel */
+.auth-panel {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 14px;
+}
+
+/
+.auth-title {
+    font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+    line-height: 1.2;
+    font-weight: 700;
+    color: #b64e10;
+    /* warm orange similar to your header bar */
+    letter-spacing: 0.5px;
+    margin-bottom: 1.25rem;
+}
+
+/* Form tweaks to get long wide inputs */
+.auth-form .form-control {
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+.auth-form .form-control:focus {
+    box-shadow: 0 0 0 .25rem rgba(182, 78, 16, .15);
+    border-color: #b64e10;
+}
+
+.auth-section .btn-primary {
+    background-color: #6b7cff;
+    border-color: #6b7cff;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.auth-section .btn-primary:hover {
+    filter: brightness(1.05);
+}
+
+.auth-panel a {
+    color: #6b7cff;
+    text-decoration: none;
+}
+
+.auth-panel a:hover {
+    text-decoration: underline;
+}
+
+@media (min-height: 700px) {
+    body.login-page .auth-section {
+        min-height: calc(100vh - 260px);
+        /* header+footer approx height */
+    }
+}
+
+body.register-page {
+    background: #faf5f3;
+}
