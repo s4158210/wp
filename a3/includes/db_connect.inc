@@ -1,0 +1,37 @@
+<?php
+// ✅ Local XAMPP settings
+$host   = "localhost";
+$user   = "root";
+$pass   = "";
+$dbname = "skillswap"; // your local DB
+
+
+// detect if running on Titan server or locally
+if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') != false) {
+    // ✅ Titan server settings
+    $host   = "talsprddb02.int.its.rmit.edu.au";  // Titan MySQL host
+    $user   = "s4158210";                // your student username
+    $pass   = "iountanath";  // replace with your Titan MySQL password
+    $dbname = "s4158210";                // Titan DB name (usually same as username)
+}
+
+// connect
+$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+if (!$conn) {
+    // Different error handling for development vs production
+    if (strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) {
+        // Development environment - show detailed error
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        // Production environment - show generic error
+        die("Connection failed. Please try again later.");
+    }
+}
+
+// Set charset to UTF-8 for proper character handling
+mysqli_set_charset($conn, "utf8");
+
+// check connection
+
+?>

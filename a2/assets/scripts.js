@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Modal image pop-up
-    const modalImage = document.getElementById('modalImage');
-    const galleryImages = document.querySelectorAll('.gallery');
+    // ✅ Modal image pop-up
+    const modalImage = document.getElementById("modalImage");
+    const galleryImages = document.querySelectorAll(".gallery");
 
     galleryImages.forEach(img => {
-        img.addEventListener('click', () => {
-            const src = img.getAttribute('data-bs-image');
-            console.log("Modal image source:", src); // debug log
+        img.addEventListener("click", () => {
+            const src = img.getAttribute("data-bs-image");
+            console.log("Clicked image source:", src); // Debugging
             modalImage.src = src;
             modalImage.alt = img.alt || "Skill image";
         });
     });
 
-    // File input validation
+    // ✅ File input validation
     const form = document.getElementById("skillForm");
     const imageInput = document.getElementById("skillImage");
 
