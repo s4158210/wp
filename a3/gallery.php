@@ -9,38 +9,88 @@
     include 'includes/nav.inc';
     include __DIR__ . '/includes/db_connect.inc';
 
-    $IMG_DIR = '/wp/a2/assets/images/skills/'; // Local XAMPP
-
+    // Base path for images
+    $IMG_DIR = '/wp/a3/assets/images/skills/'; // Local XAMPP
     if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-        $IMG_DIR = '/~s4158210/wp/a2/assets/images/skills/'; // Titan server
+        $IMG_DIR = '/~s4158210/wp/a3/assets/images/skills/'; // Titan server
     }
 
-    $stmt = $conn->prepare("SELECT skill_id, title, description, category, level, rate_per_hr, image_path 
-             FROM skills ORDER BY created_at DESC");
+    // Base path for JS
+    $JS_DIR = "/wp/a3/assets/";
+    if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+        $JS_DIR = "/~s4158210/wp/a3/assets/";
+    }
+
+    // Base URL for links
+    $BASE_URL = '/wp/a3/';
+    if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+        $BASE_URL = '/~s4158210/wp/a3/';
+    }
+
+    // -----------------------------------------
+    // NEW: category filter (GET) + category list
+    // -----------------------------------------
+    $selectedCat = isset($_GET['cat']) ? trim($_GET['cat']) : 'all';
+
+    // Load distinct categories
+    $cats = [];
+    if ($resCats = $conn->query("SELECT DISTINCT category FROM skills WHERE category IS NOT NULL AND category <> '' ORDER BY category")) {
+        while ($r = $resCats->fetch_assoc()) {
+            $cats[] = $r['category'];
+        }
+        $resCats->free();
+    }
+
+    // Fetch skills (filtered if cat chosen)
+    if ($selectedCat !== '' && $selectedCat !== 'all') {
+        $stmt = $conn->prepare(
+            "SELECT skill_id, title, description, category, level, rate_per_hr, image_path
+             FROM skills
+             WHERE category = ?
+             ORDER BY created_at DESC"
+        );
+        $stmt->bind_param("s", $selectedCat);
+    } else {
+        $stmt = $conn->prepare(
+            "SELECT skill_id, title, description, category, level, rate_per_hr, image_path
+             FROM skills
+             ORDER BY created_at DESC"
+        );
+    }
     $stmt->execute();
     $result = $stmt->get_result();
-
-    $JS_DIR = "/wp/a2/assets/";
-    if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-        $JS_DIR = "/~s4158210/wp/a2/assets/";
-    }
     ?>
 
     <!-- Gallery content -->
     <main class="container my-5">
-        <h1 class="mb-4">Skill Gallery</h1>
+        <h1 class="mb-3">Skill Gallery</h1>
+
+        <!-- NEW: Category filter control (Bootstrap only; light touch under the title) -->
+        <form class="mb-4" method="get" id="catFilterForm">
+            <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <label for="cat" class="col-form-label">Filter by category</label>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select form-select-sm" id="cat" name="cat"
+                        onchange="document.getElementById('catFilterForm').submit()">
+                        <option value="all" <?php if ($selectedCat === 'all') echo ' selected'; ?>>All</option>
+                        <?php foreach ($cats as $c): ?>
+                            <option value="<?= htmlspecialchars($c) ?>" <?php if ($selectedCat === $c) echo ' selected'; ?>>
+                                <?= htmlspecialchars($c) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        </form>
+
         <div class="row g-4">
             <?php if ($result && $result->num_rows > 0): ?>
                 <?php while ($row = $result->fetch_assoc()):
                     $id    = (int)$row['skill_id'];
                     $title = htmlspecialchars($row['title']);
                     $img   = $IMG_DIR . basename($row['image_path']);
-
-                    // Base URL (switch depending on server)
-                    $BASE_URL = '/wp/a2/';
-                    if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-                        $BASE_URL = '/~s4158210/wp/a2/';
-                    } 
                 ?>
                     <div class="col-6 col-md-3">
                         <img src="<?= htmlspecialchars($img) ?>"
@@ -54,7 +104,6 @@
                                 <?= $title ?>
                             </a>
                         </p>
-                        
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>

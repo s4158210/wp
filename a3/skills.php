@@ -12,10 +12,10 @@
     include __DIR__ . '/includes/db_connect.inc';
 
     // Base path for images
-    $IMG_DIR = '/wp/a2/assets/images/skills/';
+    $IMG_DIR = '/wp/a3/assets/images/skills/';
 
     if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-        $IMG_DIR = '/~s4158210/wp/a2/assets/images/skills/'; // Titan server
+        $IMG_DIR = '/~s4158210/wp/a3/assets/images/skills/'; // Titan server
     }
 
     // Fetch skills from DB
@@ -79,7 +79,7 @@
     <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <img src="/wp/a2/assets/images/skills/default.png" id="modalImage" class="img-fluid rounded-top" alt="popup img">
+                <img src="/wp/a3/assets/images/skills/default.png" id="modalImage" class="img-fluid rounded-top" alt="popup img">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
