@@ -33,6 +33,14 @@ if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
     $JS_DIR   = '/~s4158210/wp/a3/assets/';
 }
 
+/* ------------------------------------------------------------------
+   TITAN FIX: force your personal schema and fully-qualify table names
+   Replace s4158210 with your exact Titan schema name if different
+------------------------------------------------------------------- */
+if (method_exists($conn, 'select_db')) {
+    @($conn->select_db('s4158210'));
+}
+
 // Pull the skill + optional instructor (LEFT JOIN so old rows still work)
 $sql = "
     SELECT
@@ -45,21 +53,63 @@ $sql = "
         s.user_id,
         u.username AS instructor_name,
         u.bio      AS instructor_bio
-    FROM skills s
-    LEFT JOIN users u ON u.user_id = s.user_id
+    FROM `s4158210`.`skills` s
+    LEFT JOIN `s4158210`.`users` u ON u.user_id = s.user_id
     WHERE s.skill_id = ?
     LIMIT 1
 ";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param('i', $skill_id);
-$stmt->execute();
-$res = $stmt->get_result();
-
-if ($res->num_rows === 0) {
-    http_response_code(404);
-    exit('Skill not found.');
+if (!$stmt) {
+    http_response_code(500);
+    die('DB prepare failed: ' . htmlspecialchars($conn->error));
 }
-$skill = $res->fetch_assoc();
+if (!$stmt->bind_param('i', $skill_id)) {
+    http_response_code(500);
+    die('DB bind failed: ' . htmlspecialchars($stmt->error));
+}
+if (!$stmt->execute()) {
+    http_response_code(500);
+    die('DB execute failed: ' . htmlspecialchars($stmt->error));
+}
+
+/* Support both mysqlnd and non-mysqlnd environments on Titan */
+if (function_exists('mysqli_stmt_get_result')) {
+    $res = $stmt->get_result();
+    if (!$res || $res->num_rows === 0) {
+        http_response_code(404);
+        exit('Skill not found.');
+    }
+    $skill = $res->fetch_assoc();
+} else {
+    $stmt->store_result();
+    if ($stmt->num_rows === 0) {
+        http_response_code(404);
+        exit('Skill not found.');
+    }
+    $stmt->bind_result(
+        $r_title,
+        $r_desc,
+        $r_cat,
+        $r_img,
+        $r_rate,
+        $r_level,
+        $r_user_id,
+        $r_instructor,
+        $r_bio
+    );
+    $stmt->fetch();
+    $skill = [
+        'title'           => $r_title,
+        'description'     => $r_desc,
+        'category'        => $r_cat,
+        'image_path'      => $r_img,
+        'rate_per_hr'     => $r_rate,
+        'level'           => $r_level,
+        'user_id'         => $r_user_id,
+        'instructor_name' => $r_instructor,
+        'instructor_bio'  => $r_bio,
+    ];
+}
 $stmt->close(); // keep $conn open for footer
 
 $imgUrl = $IMG_DIR . basename($skill['image_path']);
@@ -113,7 +163,7 @@ $isOwner  = $viewerId && $viewerId === (int)$skill['user_id'];
                 <p><span style="font-weight:bold; color:#b23c17;">Level:</span> <?= htmlspecialchars($skill['level']) ?></p>
                 <p><span style="font-weight:bold; color:#b23c17;">Rate:</span> $<?= htmlspecialchars($skill['rate_per_hr']) ?>/hr</p>
 
-                <!-- NEW: Owner-only buttons (added just above your Back button; no other layout changes) -->
+                <!-- Owner-only buttons (added just above Back button; no layout changes) -->
                 <?php if ($isOwner): ?>
                     <div class="mt-3 d-flex gap-2">
                         <a class="btn btn-sm btn-warning" href="edit.php?id=<?= (int)$skill_id ?>">Edit Skill</a>
@@ -141,7 +191,7 @@ $isOwner  = $viewerId && $viewerId === (int)$skill['user_id'];
         </div>
     </div>
 
-    <!-- NEW: Delete confirmation modal (kept at end; no layout change elsewhere) -->
+    <!-- Delete confirmation modal -->
     <?php if ($isOwner): ?>
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
