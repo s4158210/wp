@@ -93,7 +93,6 @@
             </div>
         </div>
     </div> <!-- /.container my-5 wrapper -->
-    </div> <!-- /.container (outer) -->
 
     <?php include __DIR__ . '/includes/footer.inc'; ?>
 
