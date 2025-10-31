@@ -1,7 +1,6 @@
 <?php
-// details.php testing — show one skill + (optionally) instructor info
-// aa
-// NEW: session + CSRF for delete (safe to add; no layout change)
+// details.php — Titan-safe: auto-detect schema (s4158210 vs skillswap), robust prepare guards
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,37 +10,47 @@ if (empty($_SESSION['csrf'])) {
 
 include __DIR__ . '/includes/db_connect.inc';
 
-// Image base
+/* ---------- Paths ---------- */
 $IMG_DIR = '/wp/a3/assets/images/skills/';
-if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
-    $IMG_DIR = '/~s4158210/wp/a3/assets/images/skills/';
-}
-
-// Validate id
-if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
-    http_response_code(400);
-    exit('Invalid request.');
-}
-
-$skill_id = (int)$_GET['id'];
-
-// Base URLs
 $BASE_URL = '/wp/a3/';
 $JS_DIR   = '/wp/a3/assets/';
 if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
+    $IMG_DIR  = '/~s4158210/wp/a3/assets/images/skills/';
     $BASE_URL = '/~s4158210/wp/a3/';
     $JS_DIR   = '/~s4158210/wp/a3/assets/';
 }
 
-/* ------------------------------------------------------------------
-   TITAN FIX: force your personal schema and fully-qualify table names
-   Replace s4158210 with your exact Titan schema name if different
-------------------------------------------------------------------- */
-if (method_exists($conn, 'select_db')) {
-    @($conn->select_db('s4158210'));
+/* ---------- Validate id ---------- */
+if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
+    http_response_code(400);
+    exit('Invalid request.');
+}
+$skill_id = (int)$_GET['id'];
+
+/* ---------- Titan schema auto-detect ---------- */
+$CANDIDATE_SCHEMAS = ['s4158210', 'skillswap']; // try personal schema first, then local name
+$useSchema = null;
+
+foreach ($CANDIDATE_SCHEMAS as $schema) {
+    $q = $conn->query("SHOW TABLES FROM `$schema` LIKE 'skills'");
+    if ($q && $q->num_rows > 0) {
+        $useSchema = $schema;
+        $q->free();
+        break;
+    }
 }
 
-// Pull the skill + optional instructor (LEFT JOIN so old rows still work)
+if (!$useSchema) {
+    http_response_code(500);
+    die('DB error: Could not find tables "skills" in schemas: ' . htmlspecialchars(implode(', ', $CANDIDATE_SCHEMAS)));
+}
+
+if (method_exists($conn, 'select_db')) {
+    // ignore result; we also fully-qualify table names below
+    @$conn->select_db($useSchema);
+}
+
+/* ---------- Query (fully-qualified), with clear guards ---------- */
 $sql = "
     SELECT
         s.title,
@@ -53,11 +62,12 @@ $sql = "
         s.user_id,
         u.username AS instructor_name,
         u.bio      AS instructor_bio
-    FROM `s4158210`.`skills` s
-    LEFT JOIN `s4158210`.`users` u ON u.user_id = s.user_id
+    FROM `{$useSchema}`.`skills` s
+    LEFT JOIN `{$useSchema}`.`users` u ON u.user_id = s.user_id
     WHERE s.skill_id = ?
     LIMIT 1
 ";
+
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
     http_response_code(500);
@@ -72,7 +82,7 @@ if (!$stmt->execute()) {
     die('DB execute failed: ' . htmlspecialchars($stmt->error));
 }
 
-/* Support both mysqlnd and non-mysqlnd environments on Titan */
+/* Support both mysqlnd and non-mysqlnd on Titan */
 if (function_exists('mysqli_stmt_get_result')) {
     $res = $stmt->get_result();
     if (!$res || $res->num_rows === 0) {
@@ -80,6 +90,7 @@ if (function_exists('mysqli_stmt_get_result')) {
         exit('Skill not found.');
     }
     $skill = $res->fetch_assoc();
+    $res->free();
 } else {
     $stmt->store_result();
     if ($stmt->num_rows === 0) {
@@ -110,11 +121,11 @@ if (function_exists('mysqli_stmt_get_result')) {
         'instructor_bio'  => $r_bio,
     ];
 }
-$stmt->close(); // keep $conn open for footer
+$stmt->close();
 
 $imgUrl = $IMG_DIR . basename($skill['image_path']);
 
-// NEW: determine if the viewer is the owner (no layout change)
+/* ---------- Owner check ---------- */
 $viewerId = isset($_SESSION['user_id']) ? (int)$_SESSION['user_id'] : 0;
 $isOwner  = $viewerId && $viewerId === (int)$skill['user_id'];
 ?>
@@ -163,7 +174,7 @@ $isOwner  = $viewerId && $viewerId === (int)$skill['user_id'];
                 <p><span style="font-weight:bold; color:#b23c17;">Level:</span> <?= htmlspecialchars($skill['level']) ?></p>
                 <p><span style="font-weight:bold; color:#b23c17;">Rate:</span> $<?= htmlspecialchars($skill['rate_per_hr']) ?>/hr</p>
 
-                <!-- Owner-only buttons (added just above Back button; no layout changes) -->
+                <!-- Owner-only buttons -->
                 <?php if ($isOwner): ?>
                     <div class="mt-3 d-flex gap-2">
                         <a class="btn btn-sm btn-warning" href="edit.php?id=<?= (int)$skill_id ?>">Edit Skill</a>
