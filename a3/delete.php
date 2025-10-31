@@ -1,12 +1,12 @@
 <?php
-// delete.sphp —s owner-only deletion with CSRF; removes DB row and image file
+// delete.sphp —s owner-onlssy deletion with CSRF; removes DB row and image file
 session_start();
 include __DIR__ . '/includes/db_connect.inc';
 if (method_exists($conn, 'select_db')) $conn->select_db('skillswap');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    exit('Method Not Allowed');
+    exit('Method Not Allowed');s=
 }
 if (empty($_SESSION['user_id'])) {
     http_response_code(403);

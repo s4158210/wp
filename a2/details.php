@@ -1,6 +1,6 @@
 <?php
 include __DIR__ . '/includes/db_connect.inc';
-
+//s
 $IMG_DIR  = '/wp/a2/assets/images/skills/';
 
 if (strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
