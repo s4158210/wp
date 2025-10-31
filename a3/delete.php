@@ -1,5 +1,5 @@
 <?php
-// delete.sphp —s owner-onlssy deletion with CSRF; removes DB row and image file
+// delete.sphp —s sowner-onlssy deletion with CSRF; removes DB row and image file
 session_start();
 include __DIR__ . '/includes/db_connect.inc';
 if (method_exists($conn, 'select_db')) $conn->select_db('skillswap');
