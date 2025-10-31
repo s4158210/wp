@@ -93,7 +93,7 @@
                     $img   = $IMG_DIR . basename($row['image_path']);
                 ?>
                     <div class="col-6 col-md-3">
-                        <img src="<?= htmlspecialchars($img) ?>"
+                        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" <?= htmlspecialchars($img) ?>"
                             class="img-fluid rounded gallery"
                             data-bs-toggle="modal"
                             data-bs-target="#imageModal"
