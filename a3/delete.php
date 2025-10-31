@@ -1,19 +1,22 @@
 <?php
-// delete.php — owner-only deletion with CSRF; removes DB row and image file
+// a3/delete.php — owner-only deletion + CSRF + image cleanup
 
 session_start();
 include __DIR__ . '/includes/db_connect.inc';
 
-/* Pick schema: local vs Titan */
+/* Choose schema (local vs Titan) */
 $SCHEMA = 'skillswap';
 if (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'csit.rmit.edu.au') !== false) {
     $SCHEMA = 's4158210';
 }
 if (method_exists($conn, 'select_db')) {
-    @($conn->select_db($SCHEMA));
+    if (!@$conn->select_db($SCHEMA)) {
+        http_response_code(500);
+        exit('DB select failed: ' . htmlspecialchars($conn->error));
+    }
 }
 
-/* Method check */
+/* Require POST */
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     exit('Method Not Allowed');
@@ -31,19 +34,21 @@ if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) {
 
 /* Validate id */
 $id = (isset($_POST['id']) && ctype_digit($_POST['id'])) ? (int)$_POST['id'] : 0;
-if (!$id) {
+if ($id <= 0) {
     http_response_code(400);
     exit('Invalid id');
 }
 
-/* Load skill (verify owner + get image) */
+$uid = (int)$_SESSION['user_id'];
+
+/* Load skill to verify ownership and grab its image filename */
 $sql = "SELECT user_id, image_path FROM `{$SCHEMA}`.`skills` WHERE skill_id = ? LIMIT 1";
 $st  = $conn->prepare($sql);
 if (!$st) {
     http_response_code(500);
     exit('DB prepare error: ' . htmlspecialchars($conn->error));
 }
-$st->bind_param("i", $id);
+$st->bind_param('i', $id);
 if (!$st->execute()) {
     http_response_code(500);
     exit('DB execute error: ' . htmlspecialchars($st->error));
@@ -68,23 +73,22 @@ if (!$skill) {
     http_response_code(404);
     exit('Not found');
 }
-if ((int)$skill['user_id'] !== (int)$_SESSION['user_id']) {
+if ((int)$skill['user_id'] !== $uid) {
     http_response_code(403);
     exit('Forbidden');
 }
 
-/* Delete DB row */
-$uid = (int)$_SESSION['user_id'];
+/* Delete DB row (owner-guarded) */
 $del = $conn->prepare("DELETE FROM `{$SCHEMA}`.`skills` WHERE skill_id = ? AND user_id = ? LIMIT 1");
 if (!$del) {
     http_response_code(500);
     exit('DB prepare error: ' . htmlspecialchars($conn->error));
 }
-$del->bind_param("ii", $id, $uid);
+$del->bind_param('ii', $id, $uid);
 $ok = $del->execute();
 $del->close();
 
-/* If OK, remove image and redirect */
+/* Remove image file if DB deletion succeeded */
 if ($ok) {
     if (!empty($skill['image_path'])) {
         $IMG_DIR_FS = __DIR__ . "/assets/images/skills/";
@@ -93,6 +97,7 @@ if ($ok) {
             @unlink($path);
         }
     }
+    // Redirect to your instructor page
     header("Location: instructor.php?id=" . $uid);
     exit;
 }
