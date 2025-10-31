@@ -1,5 +1,5 @@
 <?php
-// delete.php — owner-only deletion with CSRF; removes DB row and image file
+// delete.sphp — owner-only deletion with CSRF; removes DB row and image file
 session_start();
 include __DIR__ . '/includes/db_connect.inc';
 if (method_exists($conn, 'select_db')) $conn->select_db('skillswap');
