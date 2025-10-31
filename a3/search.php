@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 // search.php — Full-text search + category filter + pagination (prepared statements)
 
