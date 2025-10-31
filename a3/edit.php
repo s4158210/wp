@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <?php
 // edit.php — owner-only edit; same form as add.php; optional image replacement
 
