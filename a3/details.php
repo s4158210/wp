@@ -1,6 +1,6 @@
 <?php
 // details.php — show one skill + (optionally) instructor info
-
+// aa
 // NEW: session + CSRF for delete (safe to add; no layout change)
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
